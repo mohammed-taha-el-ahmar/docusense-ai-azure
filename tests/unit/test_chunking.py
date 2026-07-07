@@ -10,7 +10,7 @@ from docusense.schemas.document import DocumentPayload
 
 def test_chunk_ids_are_stable(sample_document: DocumentPayload) -> None:
     chunks = chunk_document(sample_document, max_tokens=60, overlap_tokens=10)
-    assert all(c.chunk_id.startswith(sample_document.doc_id + "#") for c in chunks)
+    assert all(c.chunk_id.startswith(sample_document.doc_id + "_chunk_") for c in chunks)
     assert [c.chunk_index for c in chunks] == list(range(len(chunks)))
 
 
