@@ -1,0 +1,28 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: blue
+endpoint_name: docusense-online
+model: azureml:docusense-fast-classifier@latest
+environment: azureml:docusense-scoring@latest
+code_configuration:
+  code: ../../src
+  scoring_script: docusense/serving/score.py
+instance_type: Standard_F2s_v2
+instance_count: 1
+environment_variables:
+  PYTHONPATH: /var/azureml-app/src
+  CLASSIFIER_CONFIDENCE_THRESHOLD: "0.75"
+  LLM_MAX_TOKENS: "1024"
+  LLM_TIMEOUT_SECONDS: "15"
+  LLM_MAX_RETRIES: "3"
+  # Azure service credentials are injected at deploy time by scripts/deploy_endpoint.py
+  # reading from .env — never commit secrets to this file.
+request_settings:
+  request_timeout_ms: 30000
+liveness_probe:
+  initial_delay: 15
+  period: 15
+  failure_threshold: 3
+readiness_probe:
+  initial_delay: 15
+  period: 15
+  failure_threshold: 3

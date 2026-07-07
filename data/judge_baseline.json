@@ -1,0 +1,11 @@
+{
+  "mean_score": 4.25,
+  "per_dimension": {
+    "intent_correctness": 5.0,
+    "citation_grounding": 4.0,
+    "field_extraction_quality": 4.0,
+    "conciseness_and_style": 4.0
+  },
+  "generated_at": "2026-07-07T00:00:00+00:00",
+  "n_traces": 3
+}

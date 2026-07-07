@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# uv lock is committed for reproducibility; comment next line to include it
+uv.lock
+
+# Env
+.env
+.env.local
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Notebooks
+.ipynb_checkpoints/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars.local
+.terraform.lock.hcl
+
+# Azure
+.azure/
+
+# Outputs
+outputs/
+reports/
+*.pkl
+*.joblib
+!data/sample_contracts/**
+!data/*.jsonl
+
+# OS
+.DS_Store
+Thumbs.db

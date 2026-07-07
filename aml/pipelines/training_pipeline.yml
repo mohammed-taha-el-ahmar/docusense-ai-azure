@@ -1,0 +1,35 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+display_name: docusense-training
+experiment_name: docusense-training
+description: Train the fast classifier head and evaluate it.
+
+settings:
+  default_compute: azureml:cpu-cluster
+  continue_on_step_failure: false
+
+inputs:
+  corpus:
+    type: uri_folder
+    path: azureml://datastores/raw/paths/contracts/
+  labels:
+    type: uri_file
+    path: azureml://datastores/raw/paths/labels/golden_intents.jsonl
+  min_macro_f1: 0.5
+
+jobs:
+  train:
+    type: command
+    component: ../components/train_classifier.yml
+    inputs:
+      corpus: ${{parent.inputs.corpus}}
+      labels: ${{parent.inputs.labels}}
+
+  evaluate:
+    type: command
+    component: ../components/evaluate.yml
+    inputs:
+      corpus: ${{parent.inputs.corpus}}
+      labels: ${{parent.inputs.labels}}
+      classifier: ${{parent.jobs.train.outputs.artifact}}
+      min_macro_f1: ${{parent.inputs.min_macro_f1}}

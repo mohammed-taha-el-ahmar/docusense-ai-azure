@@ -1,0 +1,8 @@
+$schema: https://azuremlschemas.azureedge.net/latest/azureBlob.schema.json
+type: azure_blob
+name: raw
+description: Raw contracts and labels for training.
+account_name: stdocusensedev0vf41
+container_name: raw
+# NOTE: credentials are set at registration time via REST API.
+# See README.md "Azure quickstart" step 5 for registration command.

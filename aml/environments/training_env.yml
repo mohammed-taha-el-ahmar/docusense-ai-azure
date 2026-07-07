@@ -1,0 +1,25 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+name: docusense-training
+description: Environment for training the DocuSense fast classifier.
+image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04
+conda_file:
+  channels:
+    - conda-forge
+  dependencies:
+    - python=3.11
+    - pip
+    - pip:
+        - mlflow==2.14.1
+        - azureml-mlflow==1.57.0
+        - lightgbm==4.3.0
+        - scikit-learn==1.4.2
+        - pandas==2.2.2
+        - pyarrow==15.0.2
+        - pydantic==2.7.1
+        - pydantic-settings==2.2.1
+        - jinja2==3.1.4
+        - typer==0.12.3
+        - joblib==1.4.0
+        - tiktoken==0.7.0
+        - openai==1.30.5
+        - azure-search-documents==11.5.1

@@ -1,0 +1,22 @@
+[
+  {
+    "clause_id": "std-termination-001",
+    "title": "Standard termination for convenience",
+    "text": "Either party may terminate this Agreement upon thirty (30) days' prior written notice to the other party."
+  },
+  {
+    "clause_id": "std-payment-001",
+    "title": "Net-30 payment terms",
+    "text": "Payment shall be due within thirty (30) days of receipt of a correct invoice."
+  },
+  {
+    "clause_id": "std-price-escalation-001",
+    "title": "Annual price escalation cap",
+    "text": "Prices may be increased once per calendar year, not to exceed the annual change in the Consumer Price Index."
+  },
+  {
+    "clause_id": "std-liability-001",
+    "title": "Limitation of liability",
+    "text": "In no event shall either party's aggregate liability exceed the fees paid in the preceding twelve months."
+  }
+]

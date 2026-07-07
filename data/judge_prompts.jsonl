@@ -1,0 +1,3 @@
+{"doc_id": "msa-01", "prompt": "Classify and reason over document msa-01.", "reference_intent": "msa"}
+{"doc_id": "term-01", "prompt": "Classify and reason over document term-01.", "reference_intent": "termination"}
+{"doc_id": "price-01", "prompt": "Classify and reason over document price-01.", "reference_intent": "price_change"}

@@ -1,0 +1,22 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+display_name: docusense-indexing
+experiment_name: docusense-indexing
+description: Chunk and index the corpus into Azure AI Search.
+
+settings:
+  default_compute: azureml:cpu-cluster
+  continue_on_step_failure: false
+
+inputs:
+  corpus:
+    type: uri_folder
+    path: azureml://datastores/raw/paths/contracts/
+
+jobs:
+  index:
+    type: command
+    component: ../components/index_documents.yml
+    inputs:
+      corpus: ${{parent.inputs.corpus}}
+      push_to_search: true

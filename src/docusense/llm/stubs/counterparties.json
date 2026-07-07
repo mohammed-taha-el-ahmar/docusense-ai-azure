@@ -1,0 +1,14 @@
+{
+  "acme corp": {
+    "entity_name": "ACME Corp",
+    "first_seen": "2019-04-11",
+    "active_contracts": 3,
+    "notes": "Long-standing customer, historically low-friction renewals."
+  },
+  "globex ltd": {
+    "entity_name": "Globex Ltd",
+    "first_seen": "2023-11-02",
+    "active_contracts": 1,
+    "notes": "New customer, expanded pilot last quarter."
+  }
+}

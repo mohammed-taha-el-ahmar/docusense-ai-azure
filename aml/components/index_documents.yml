@@ -1,0 +1,22 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+name: docusense_index_documents
+display_name: Chunk + index documents
+version: 2
+inputs:
+  corpus:
+    type: uri_folder
+  push_to_search:
+    type: boolean
+    default: true
+outputs:
+  chunks:
+    type: uri_folder
+environment: azureml:docusense-training@latest
+code: ../../
+command: >-
+  export PYTHONPATH=src:$PYTHONPATH &&
+  python -m docusense.pipelines.index
+  ${{inputs.corpus}}
+  ${{outputs.chunks}}
+  ${{inputs.push_to_search}}

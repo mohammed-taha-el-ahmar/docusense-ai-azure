@@ -1,0 +1,8 @@
+PURCHASE ORDER 8842
+
+Buyer: ACME Corp
+Supplier: Wonka Industries
+Item: 500 units of Widget-A at $12.50 per unit
+Total: $6,250
+Delivery: on or before April 20, 2024, to the ACME Corp Chicago warehouse.
+Payment terms: net-30 upon receipt of goods.

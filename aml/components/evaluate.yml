@@ -1,0 +1,28 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+name: docusense_evaluate
+display_name: Deterministic eval suite
+version: 3
+inputs:
+  corpus:
+    type: uri_folder
+  labels:
+    type: uri_file
+  classifier:
+    type: uri_folder
+  min_macro_f1:
+    type: number
+    default: 0.5
+outputs:
+  metrics:
+    type: uri_folder
+environment: azureml:docusense-training@latest
+code: ../../
+command: >-
+  export PYTHONPATH=src:$PYTHONPATH &&
+  python -m docusense.pipelines.evaluate
+  ${{inputs.corpus}}
+  ${{inputs.labels}}
+  ${{inputs.classifier}}/artifact.joblib
+  ${{outputs.metrics}}
+  ${{inputs.min_macro_f1}}

@@ -1,0 +1,4 @@
+Meeting minutes — Q3 kickoff
+
+Attendees: A. Chen, R. Patel, D. Ford.
+Discussed roadmap for the analytics platform, agreed to revisit prioritisation of the SSO integration item next sprint. Action items captured in the shared tracker.

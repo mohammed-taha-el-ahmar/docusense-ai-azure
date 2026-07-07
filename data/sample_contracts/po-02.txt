@@ -1,0 +1,8 @@
+PURCHASE ORDER 9013
+
+Buyer: Globex Ltd
+Supplier: Cyberdyne Systems
+Line 1: 12 x Model-T300 chassis at $9,500 each
+Line 2: 24 x Model-T400 controllers at $2,750 each
+Grand total: $180,000
+Delivery FOB destination on May 5, 2025.

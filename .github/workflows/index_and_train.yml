@@ -1,0 +1,39 @@
+name: Index & Train
+
+on:
+  workflow_dispatch:
+    inputs:
+      pipeline:
+        description: "Pipeline YAML"
+        required: true
+        default: "aml/pipelines/training_pipeline.yml"
+
+concurrency:
+  group: index-and-train
+  cancel-in-progress: false
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.4.20"
+      - run: uv python install 3.11
+      - run: uv sync --extra azure
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Submit training pipeline
+        env:
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          AML_WORKSPACE_NAME: ${{ secrets.AML_WORKSPACE_NAME }}
+        run: uv run python scripts/submit_training_job.py --pipeline "${{ github.event.inputs.pipeline }}" --wait

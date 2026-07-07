@@ -1,0 +1,5 @@
+{"doc_id": "nda-01", "fields": {"effective_date": "March 14, 2024", "counterparty": "Globex Ltd", "governing_law": "Delaware"}}
+{"doc_id": "msa-01", "fields": {"effective_date": "July 1, 2024", "payment_terms": "net 30"}}
+{"doc_id": "po-01", "fields": {"total_value": "$6,250", "delivery_date": "April 20, 2024"}}
+{"doc_id": "term-01", "fields": {"effective_date": "March 15, 2025", "counterparty": "Vandelay Consulting"}}
+{"doc_id": "price-01", "fields": {"effective_date": "January 1, 2025", "adjustment": "4.5%"}}

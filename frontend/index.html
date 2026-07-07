@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuSense — Document Intelligence</title>
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --border: #2d3142;
+            --text: #e4e6eb;
+            --muted: #8b8fa3;
+            --accent: #6c63ff;
+            --accent-hover: #5a52e0;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        header p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .config-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .config-panel label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 0.35rem;
+        }
+
+        .config-panel input, .config-panel select {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .config-panel input:focus, .config-panel select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-local { background: #1e3a5f; color: #60a5fa; }
+        .badge-azure { background: #1e3a2e; color: #4ade80; }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 700px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .config-panel { grid-template-columns: 1fr; }
+        }
+
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .panel h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .panel h2 .icon {
+            font-size: 1.2rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.85rem;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .input-row input {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.85rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .response-panel {
+            margin-top: 1.5rem;
+        }
+
+        .response-panel h2 {
+            margin-bottom: 0.75rem;
+        }
+
+        .response-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .response-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .response-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot.ok { background: var(--success); }
+        .status-dot.err { background: var(--danger); }
+
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .samples {
+            margin-top: 0.75rem;
+        }
+
+        .samples summary {
+            font-size: 0.8rem;
+            color: var(--muted);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sample-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
+        }
+
+        .sample-btns button {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .sample-btns button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 DocuSense</h1>
+            <p>Document Intent Classifier + LLM Reasoning</p>
+        </header>
+
+        <div class="config-panel">
+            <div>
+                <label>Endpoint URL</label>
+                <input type="text" id="endpointUrl" value="http://localhost:8000" placeholder="http://localhost:8000 or AML scoring URI">
+            </div>
+            <div>
+                <label>Target</label>
+                <select id="targetMode">
+                    <option value="local">Local (FastAPI)</option>
+                    <option value="azure">Azure ML Endpoint</option>
+                </select>
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <div id="connectionBadge" class="badge badge-local">LOCAL</div>
+            </div>
+        </div>
+
+        <!-- Azure key input (hidden by default) -->
+        <div id="azureKeyRow" style="display:none; margin-bottom:1.5rem;">
+            <div class="config-panel" style="grid-template-columns: 1fr;">
+                <div>
+                    <label>Azure ML API Key (Bearer token)</label>
+                    <input type="password" id="azureKey" placeholder="Paste your endpoint key here...">
+                </div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="panel">
+                <h2><span class="icon">📝</span> Input Document</h2>
+                <textarea id="docText" placeholder="Paste your document text here...">PURCHASE ORDER 8842
+
+Buyer: ACME Corp
+Supplier: Wonka Industries
+Item: 500 units of Widget-A at $12.50 per unit
+Total: $6,250
+Delivery: on or before April 20, 2024, to the ACME Corp Chicago warehouse.
+Payment terms: net-30 upon receipt of goods.</textarea>
+                <div class="input-row">
+                    <input type="text" id="docId" placeholder="doc_id (optional)" value="test-doc-01">
+                </div>
+                <div class="actions">
+                    <button class="btn btn-primary" id="btnClassify" onclick="sendRequest('classify')">⚡ Classify</button>
+                    <button class="btn btn-primary" id="btnReason" onclick="sendRequest('reason')">🧠 Reason</button>
+                    <button class="btn btn-outline" onclick="clearAll()">Clear</button>
+                </div>
+
+                <details class="samples">
+                    <summary>Load sample document…</summary>
+                    <div class="sample-btns">
+                        <button onclick="loadSample('nda')">NDA</button>
+                        <button onclick="loadSample('po')">Purchase Order</button>
+                        <button onclick="loadSample('msa')">MSA</button>
+                        <button onclick="loadSample('rfp')">RFP</button>
+                        <button onclick="loadSample('price')">Price Change</button>
+                        <button onclick="loadSample('term')">Termination</button>
+                    </div>
+                </details>
+            </div>
+
+            <div class="panel response-panel">
+                <h2><span class="icon">📊</span> Response</h2>
+                <div class="response-box" id="responseBox">
+<span style="color: var(--muted)">Response will appear here...</span>
+                </div>
+                <div class="response-meta" id="responseMeta"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SAMPLES = {
+            nda: `MUTUAL NON-DISCLOSURE AGREEMENT
+
+This Mutual Non-Disclosure Agreement ("Agreement") is entered into as of March 14, 2024, by and between ACME Corp ("Discloser") and Globex Ltd ("Recipient"). The parties intend to explore a potential business relationship and, in connection therewith, may disclose confidential information to each other. Recipient agrees to hold all Confidential Information in strict confidence for a period of three (3) years and shall not disclose it to any third party without prior written consent. This Agreement is governed by the laws of the State of Delaware.`,
+            po: `PURCHASE ORDER 8842
+
+Buyer: ACME Corp
+Supplier: Wonka Industries
+Item: 500 units of Widget-A at $12.50 per unit
+Total: $6,250
+Delivery: on or before April 20, 2024, to the ACME Corp Chicago warehouse.
+Payment terms: net-30 upon receipt of goods.`,
+            msa: `MASTER SERVICES AGREEMENT
+
+This Master Services Agreement is made effective as of July 1, 2024, between ACME Corp ("Customer") and Vandelay Consulting ("Provider"). Provider shall provide professional services under one or more Statements of Work. Payment terms are net thirty (30) days from a correct invoice. Either party may terminate for convenience upon thirty (30) days' written notice. Aggregate liability is capped at fees paid in the preceding twelve months.`,
+            rfp: `REQUEST FOR PROPOSAL
+
+ACME Corp invites qualified vendors to submit proposals for the implementation of a new customer data platform. Proposals must be received by 5pm CET on August 1, 2024. The evaluation criteria include technical capability (40%), price (30%), delivery timeline (20%), and customer references (10%). Proposals should be submitted to procurement at ACME Corp.`,
+            price: `PRICE ADJUSTMENT NOTICE
+
+Vandelay Consulting will apply a 4.5% annual price adjustment across all rates under the Master Services Agreement with ACME Corp, effective January 1, 2025. This adjustment is within the Consumer Price Index cap specified in Section 6.3 of the Agreement. Please contact your account manager with any questions.`,
+            term: `NOTICE OF TERMINATION
+
+Pursuant to Section 12.2 of the Master Services Agreement dated July 1, 2024 between ACME Corp and Vandelay Consulting, this letter serves as formal notice that ACME Corp is terminating the Agreement for convenience effective March 15, 2025. Final invoices should be submitted no later than April 15, 2025.`
+        };
+
+        const targetSelect = document.getElementById('targetMode');
+        const endpointInput = document.getElementById('endpointUrl');
+        const azureKeyRow = document.getElementById('azureKeyRow');
+        const badge = document.getElementById('connectionBadge');
+
+        targetSelect.addEventListener('change', () => {
+            const isAzure = targetSelect.value === 'azure';
+            azureKeyRow.style.display = isAzure ? 'block' : 'none';
+            badge.className = `badge ${isAzure ? 'badge-azure' : 'badge-local'}`;
+            badge.textContent = isAzure ? 'AZURE' : 'LOCAL';
+            if (isAzure && endpointInput.value === 'http://localhost:8000') {
+                endpointInput.value = '';
+                endpointInput.placeholder = 'https://<endpoint>.swedencentral.inference.ml.azure.com/score';
+            } else if (!isAzure && !endpointInput.value) {
+                endpointInput.value = 'http://localhost:8000';
+            }
+        });
+
+        function loadSample(type) {
+            document.getElementById('docText').value = SAMPLES[type];
+            document.getElementById('docId').value = `${type}-test-01`;
+        }
+
+        function clearAll() {
+            document.getElementById('docText').value = '';
+            document.getElementById('docId').value = '';
+            document.getElementById('responseBox').innerHTML = '<span style="color: var(--muted)">Response will appear here...</span>';
+            document.getElementById('responseMeta').innerHTML = '';
+        }
+
+        async function sendRequest(route) {
+            const text = document.getElementById('docText').value.trim();
+            const docId = document.getElementById('docId').value.trim() || 'doc-' + Date.now();
+            const endpoint = endpointInput.value.trim();
+            const isAzure = targetSelect.value === 'azure';
+            const key = document.getElementById('azureKey')?.value?.trim();
+
+            if (!text) {
+                alert('Please enter document text.');
+                return;
+            }
+            if (!endpoint) {
+                alert('Please enter an endpoint URL.');
+                return;
+            }
+
+            const responseBox = document.getElementById('responseBox');
+            const meta = document.getElementById('responseMeta');
+            responseBox.innerHTML = '<span class="spinner"></span> Sending request...';
+            meta.innerHTML = '';
+
+            // Disable buttons
+            document.getElementById('btnClassify').disabled = true;
+            document.getElementById('btnReason').disabled = true;
+
+            const startTime = performance.now();
+
+            try {
+                let url, body, headers;
+
+                if (isAzure) {
+                    // Proxy through local FastAPI to avoid browser CORS block.
+                    // The local server forwards the request server-side to AML.
+                    url = 'http://localhost:8000/proxy/score';
+                    body = JSON.stringify({
+                        scoring_uri: endpoint,
+                        api_key: key,
+                        body: {
+                            route: route,
+                            document: { doc_id: docId, text: text }
+                        }
+                    });
+                    headers = { 'Content-Type': 'application/json' };
+                } else {
+                    // Local FastAPI: POST /{route}
+                    url = `${endpoint}/${route}`;
+                    body = JSON.stringify({
+                        document: { doc_id: docId, text: text }
+                    });
+                    headers = { 'Content-Type': 'application/json' };
+                }
+
+                const resp = await fetch(url, { method: 'POST', headers, body });
+                const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
+                const data = await resp.json();
+
+                if (!resp.ok) {
+                    responseBox.innerHTML = formatJSON({ error: data.detail || data.error || resp.statusText, status: resp.status });
+                    meta.innerHTML = `<span><span class="status-dot err"></span> ${resp.status} ${resp.statusText}</span><span>⏱ ${elapsed}s</span>`;
+                } else {
+                    responseBox.innerHTML = formatJSON(data);
+                    meta.innerHTML = `<span><span class="status-dot ok"></span> 200 OK</span><span>⏱ ${elapsed}s</span><span>🎯 route: ${route}</span>`;
+                }
+            } catch (err) {
+                const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
+                responseBox.innerHTML = formatJSON({ error: err.message, hint: 'Is the server running? Check CORS if using Azure.' });
+                meta.innerHTML = `<span><span class="status-dot err"></span> Network error</span><span>⏱ ${elapsed}s</span>`;
+            } finally {
+                document.getElementById('btnClassify').disabled = false;
+                document.getElementById('btnReason').disabled = false;
+            }
+        }
+
+        function formatJSON(obj) {
+            const str = JSON.stringify(obj, null, 2);
+            // Simple syntax highlighting
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"([^"]+)":/g, '<span style="color:#6c63ff">"$1"</span>:')
+                .replace(/: "([^"]*)"/g, ': <span style="color:#22c55e">"$1"</span>')
+                .replace(/: (\d+\.?\d*)/g, ': <span style="color:#f59e0b">$1</span>')
+                .replace(/: (true|false|null)/g, ': <span style="color:#ef4444">$1</span>');
+        }
+    </script>
+</body>
+</html>

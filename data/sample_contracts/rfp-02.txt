@@ -1,0 +1,3 @@
+REQUEST FOR TENDER — CLOUD MIGRATION
+
+Globex Ltd is soliciting proposals to migrate its on-premises workloads to a hyperscale cloud environment. Interested vendors must submit responses by October 3, 2024. The award criteria emphasise security (35%), cost of ownership (30%), migration approach (25%), and prior public-sector experience (10%).

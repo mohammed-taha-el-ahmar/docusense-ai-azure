@@ -1,0 +1,22 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+name: docusense_train_classifier
+display_name: Train fast intent classifier head
+version: 6
+inputs:
+  corpus:
+    type: uri_folder
+  labels:
+    type: uri_file
+outputs:
+  artifact:
+    type: uri_folder
+environment: azureml:docusense-training@latest
+code: ../../
+command: >-
+  export PYTHONPATH=src:$PYTHONPATH &&
+  python -m docusense.classifier.train
+  ${{inputs.corpus}}
+  ${{inputs.labels}}
+  ${{outputs.artifact}}
+  azureml://
