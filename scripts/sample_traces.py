@@ -82,7 +82,6 @@ def _load_local_fallback(
     simulating what production traces would look like.
     """
     from docusense.evals.datasets import load_judge_prompts
-    from docusense.schemas.classification import IntentLabel
     from docusense.schemas.reasoning import Citation, ReasoningResponse
 
     prompts = load_judge_prompts(judge_prompts_path)

@@ -1,16 +1,16 @@
 name: Evals
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - "src/docusense/llm/prompts/**"
-      - "src/docusense/llm/**"
-      - "src/docusense/classifier/**"
-      - "src/docusense/retrieval/**"
-      - "src/docusense/evals/**"
-      - "data/**"
-      - ".github/workflows/evals.yml"
+  # pull_request:
+  #   branches: [main]
+  #   paths:
+  #     - "src/docusense/llm/prompts/**"
+  #     - "src/docusense/llm/**"
+  #     - "src/docusense/classifier/**"
+  #     - "src/docusense/retrieval/**"
+  #     - "src/docusense/evals/**"
+  #     - "data/**"
+  #     - ".github/workflows/evals.yml"
   workflow_dispatch:
 
 concurrency:

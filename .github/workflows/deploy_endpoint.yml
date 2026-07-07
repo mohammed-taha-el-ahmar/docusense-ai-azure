@@ -1,8 +1,8 @@
 name: Deploy Endpoint
 
 on:
-  push:
-    tags: ["v*"]
+  # push:
+  #   tags: ["v*"]
   workflow_dispatch:
     inputs:
       deployment_name:

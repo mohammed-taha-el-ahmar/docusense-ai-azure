@@ -114,13 +114,13 @@ class AzureAISearchRetriever:
         from azure.search.documents.models import VectorizedQuery
 
         q_vec = self.embedding.embed([query])[0].tolist()
-        search_kwargs: dict = dict(
-            search_text=query,
-            vector_queries=[
+        search_kwargs: dict = {
+            "search_text": query,
+            "vector_queries": [
                 VectorizedQuery(vector=q_vec, k_nearest_neighbors=top_k * 2, fields="embedding")
             ],
-            top=top_k,
-        )
+            "top": top_k,
+        }
         if self._use_semantic_ranker:
             search_kwargs["query_type"] = "semantic"
             search_kwargs["semantic_configuration_name"] = "default"

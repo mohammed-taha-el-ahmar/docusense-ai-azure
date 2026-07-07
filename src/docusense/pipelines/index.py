@@ -14,7 +14,13 @@ import typer
 from docusense.classifier.embeddings import build_default_provider
 from docusense.config import get_settings
 from docusense.retrieval.chunker import chunk_documents
-from docusense.retrieval.indexer import dump_chunks, emit_manifest, ensure_search_index, read_corpus, upsert_to_ai_search
+from docusense.retrieval.indexer import (
+    dump_chunks,
+    emit_manifest,
+    ensure_search_index,
+    read_corpus,
+    upsert_to_ai_search,
+)
 
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 

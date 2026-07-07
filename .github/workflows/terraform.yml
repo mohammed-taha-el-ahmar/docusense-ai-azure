@@ -1,15 +1,15 @@
 name: Terraform
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - "infra/**"
-      - ".github/workflows/terraform.yml"
-  push:
-    branches: [main]
-    paths:
-      - "infra/**"
+  # pull_request:
+  #   branches: [main]
+  #   paths:
+  #     - "infra/**"
+  #     - ".github/workflows/terraform.yml"
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "infra/**"
   workflow_dispatch:
     inputs:
       environment:
