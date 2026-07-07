@@ -87,7 +87,9 @@ def ensure_search_index(
 
     vector_search = VectorSearch(
         algorithms=[HnswAlgorithmConfiguration(name="default-hnsw")],
-        profiles=[VectorSearchProfile(name="default-profile", algorithm_configuration_name="default-hnsw")],
+        profiles=[
+            VectorSearchProfile(name="default-profile", algorithm_configuration_name="default-hnsw")
+        ],
     )
 
     index = SearchIndex(name=index_name, fields=fields, vector_search=vector_search)

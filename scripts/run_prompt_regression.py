@@ -141,11 +141,7 @@ def main(
         raise typer.Exit(code=1)
 
     # ── Step 2: Load traces ───────────────────────────────────────────
-    traces_raw = [
-        json.loads(line)
-        for line in traces_file.read_text().splitlines()
-        if line.strip()
-    ]
+    traces_raw = [json.loads(line) for line in traces_file.read_text().splitlines() if line.strip()]
     if not traces_raw:
         typer.echo("ERROR: No traces to score.", err=True)
         raise typer.Exit(code=1)
@@ -164,8 +160,7 @@ def main(
             result = judge.score(response)
             results.append(result)
             typer.echo(
-                f"  [{i + 1}/{len(traces_raw)}] {result.doc_id}: "
-                f"mean={result.score.mean:.2f}"
+                f"  [{i + 1}/{len(traces_raw)}] {result.doc_id}: mean={result.score.mean:.2f}"
             )
         except Exception as e:
             typer.echo(f"  [{i + 1}/{len(traces_raw)}] ERROR: {e}", err=True)
@@ -180,9 +175,8 @@ def main(
     per_dimension = {
         "intent_correctness": sum(r.score.intent_correctness for r in results) / len(results),
         "citation_grounding": sum(r.score.citation_grounding for r in results) / len(results),
-        "field_extraction_quality": sum(
-            r.score.field_extraction_quality for r in results
-        ) / len(results),
+        "field_extraction_quality": sum(r.score.field_extraction_quality for r in results)
+        / len(results),
         "conciseness_and_style": sum(r.score.conciseness_and_style for r in results) / len(results),
     }
 
