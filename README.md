@@ -1,7 +1,7 @@
 # DocuSense — Document Intent Classifier + LLM Reasoning on Azure
 
 
-[![Architecture]https://github.com/mohammed-taha-el-ahmar/docusense-ai-azure/blob/main/docs/img/docusense-ai-azure-demo.png)](https://github.com/mohammed-taha-el-ahmar/docusense-ai-azure/blob/main/docs/img/docusense-ai-azure-demo.png)
+![Architecture](https://github.com/mohammed-taha-el-ahmar/docusense-ai-azure/blob/main/docs/img/docusense-ai-azure-demo.png)
 
 
 AI Engineer portfolio project. Two-route document intelligence service on Azure ML managed endpoints: a millisecond-scale intent classifier for cheap traffic, and a GPT-4o-backed reasoning route with RAG, tool calling, structured outputs, and guardrails.
