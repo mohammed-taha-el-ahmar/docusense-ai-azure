@@ -1,5 +1,7 @@
 # DocuSense — Document Intent Classifier + LLM Reasoning on Azure
 
+[![CI](https://github.com/mohammed-taha-el-ahmar/docusense-ai-azure/actions/workflows/ci.yml/badge.svg)](https://github.com/mohammed-taha-el-ahmar/docusense-ai-azure/actions/workflows/ci.yml)
+
 
 ![Architecture](https://github.com/mohammed-taha-el-ahmar/docusense-ai-azure/blob/main/docs/img/docusense-ai-azure-demo.png)
 

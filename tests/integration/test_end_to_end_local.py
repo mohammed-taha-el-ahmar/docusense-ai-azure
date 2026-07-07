@@ -38,13 +38,9 @@ def test_train_then_serve(
     result = runner.invoke(
         train_app,
         [
-            "--corpus",
             str(CORPUS),
-            "--labels",
             str(LABELS),
-            "--output-dir",
             str(output_dir),
-            "--tracking-uri",
             f"file:{tmp_path / 'mlruns'}",
         ],
     )
